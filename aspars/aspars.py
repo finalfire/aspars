@@ -1,7 +1,7 @@
 from lark import Lark, Transformer
 import pkgutil
 
-_GRAMMAR_FILE = 'resources/asp_grammar.lark'
+_GRAMMAR_FILE = 'resources/wasp_grammar.lark'
 
 class ASParsTransformer(Transformer):
     """Transformer for converting an answer set into a JSON object.
