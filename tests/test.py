@@ -12,11 +12,6 @@ class TestSum(unittest.TestCase):
         r = [{"name": "a"}, {"name": "b"}, {"pred": "f", "ext": ["x"], "arity": 1}, {"pred": "b", "ext": ["\"ciao\""], "arity": 1}]
         self.assertEqual(aspars.ASPars().parse(t), r, "Should be {}".format(r))
 
-    def test_single_parse_2(self):
-        t = '{a, foo(x), bar(-1,1), fizz("42")}'
-        r = [{'name': 'a'}, {'pred': 'foo', 'ext': ['x'], 'arity': 1}, {'pred': 'bar', 'ext': [-1, 1], 'arity': 2}, {'pred': 'fizz', 'ext': ['"42"'], 'arity': 1}]
-        self.assertEqual(aspars.ASPars().parse(t), r, "Should be{}".format(r))
-
     def test_multiple_parse(self):
         t = '{a, b, f(x), b("foo")}\n{f(-1,0,1), x, g("42",42)}'.split('\n')
         r = [
