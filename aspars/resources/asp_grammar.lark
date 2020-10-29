@@ -1,0 +1,13 @@
+answerset: "{" predicate+ "}"
+predicate: name extension? ","?
+extension: "(" param ("," param)* ")"
+param: LOWCHARS | NUMBER | ESCAPED_STRING
+name: WORD
+
+LOWCHARS: /[a-z]+/
+
+%import common.LETTER
+%import common.WORD
+%import common.ESCAPED_STRING
+%import common.SIGNED_NUMBER    -> NUMBER
+%ignore " "           // Disregard spaces in text
