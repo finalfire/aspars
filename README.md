@@ -2,13 +2,30 @@
 
 Quick and easy parsing of Answer Sets into python dictionaries.
 
-## Compatibility
+## Specification
 
-Currently, ASPars allows to parse answer sets represented by the wasp output format, e.g., `{a, b(x), c(0), ...}`.
+ASPars allows the user to parse answer sets represented by the wasp output format, e.g., `{a, b(x), c(0), ...}`.
+
+An answer set is parsed into a list of _predicate_. A predicate is represented as a dictionary with the following keys:
+* `name`: name of the predicate,
+* `ext`: a list of the (heterogeneous) values of the predicate,
+* `arity`: arity of the predicate (e.g., length of the extension).
+
+If the predicate is an atom, then only the `name` key is defined.
+
+#### Example
+`{a, foo(x), bar(42,"42")}` is parsed into the following singleton:
+```python
+[
+    {'name': 'a'},
+    {'name': 'foo', 'ext': ['x'], 'arity': 1},
+    {'name': 'bar', 'ext': [42, '"42"'], 'arity': 2}
+]
+```
 
 ## Usage
 
-ASPars can be used importing it or as a standalone module.
+ASPars can be used by importing it or as a standalone module.
 
 
 ### Importing ASPars in a python program
