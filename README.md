@@ -2,6 +2,15 @@
 
 Quick and easy parsing of Answer Sets into friendly python structures.
 
+## Installation
+
+Via pip:
+```bash
+pip install aspars
+```
+
+or clone the repo and use the module `aspars`.
+
 ## Specification
 
 ASPars allows the user to parse answer sets represented in the following formats:
