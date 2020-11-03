@@ -1,7 +1,10 @@
 from lark import Lark, Transformer
 import pkgutil
 
-_GRAMMAR_FILE = 'resources/wasp_grammar.lark'
+_SYNTAX = {
+    'wasp': 'resources/wasp_grammar.lark',
+    'clasp': 'resources/clasp_grammar.lark'
+}
 
 class ASParsTransformer(Transformer):
     """Transformer for converting an answer set into a JSON object.
@@ -13,7 +16,6 @@ class ASParsTransformer(Transformer):
     def predicate(self, childrens):
         if len(childrens) > 1:
             name, extension = childrens
-            arity = len(extension)
             return {'pred': name, 'ext': extension, 'arity': len(extension)}
         else:
             return {'name': childrens[0]}
@@ -28,15 +30,18 @@ class ASParsTransformer(Transformer):
 
 
 class ASPars:
-    def __init__(self):
-        self.grammar = pkgutil.get_data(__name__, _GRAMMAR_FILE).decode('utf-8')
+    def __init__(self, syntax='wasp'):
+        self.syntax = syntax
+        if self.syntax not in _SYNTAX.keys():
+            raise Exception("Syntax not supported")
+
+        self.grammar = pkgutil.get_data(__name__, _SYNTAX[self.syntax]).decode('utf-8')
         self.parser = Lark(self.grammar, start='answerset', parser='lalr')
         self.transformer = ASParsTransformer()
 
     def parse(self, data):
         """Parse a single answer set or a list of.
-        
-        If `type(data) == str`, returns a singleton; otherwise, returns a generator."""
+        If `type(data) == str`, returns a singleton; otherwise, returns an iterable."""
         if isinstance(data, str):
             return self._parse(data)
 
@@ -44,7 +49,6 @@ class ASPars:
 
     def _parse(self, s):
         """Parse the representation of an answer set (e.g., a single row from the output of wasp, clasp, etc.).
-        
         Returns an array of predicate contained in the answer set."""
         tree = self.parser.parse(s) 
         return self.transformer.transform(tree)
