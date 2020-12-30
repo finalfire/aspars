@@ -1,5 +1,5 @@
 answerset: predicate (" " predicate)*
-predicate: name extension? ","?
+predicate: name extension?
 extension: "(" param ("," param)* ")"
 param: LOWCHARS | NUMBER | ESCAPED_STRING
 name: WORD

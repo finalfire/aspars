@@ -36,7 +36,7 @@ class ASPars:
             raise Exception("Syntax not supported")
 
         self.grammar = pkgutil.get_data(__name__, _SYNTAX[self.syntax]).decode('utf-8')
-        self.parser = Lark(self.grammar, start='answerset', parser='lalr')
+        self.parser = Lark(self.grammar, start='answerset')
         self.transformer = ASParsTransformer()
 
     def parse(self, data):
